@@ -1,0 +1,27 @@
+---
+title: "Places I Want to Visit in the USA"
+author: "Jesse Dixon"
+date: "September 25, 2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(leaflet)
+```
+
+
+```{r}
+my_map<-leaflet() %>% addTiles() %>% 
+    addMarkers(lat=	44.016369, lng=-92.475395, popup="Rochester, MN") %>% 
+    addMarkers(lat=36.16589, lng=-86.78444, popup="Nashville, TN") %>% 
+    addMarkers(lat=37.77493, lng=-122.41942, popup="San Francisco, CA") %>% 
+    addMarkers(lat=36.17497, lng=-115.13722, popup="Las Vegas, NV") %>% 
+    addMarkers(lat=40.71427, lng=-74.00597, popup="New York City, NY") %>% 
+    addMarkers(lat=45.52345, lng=-122.67621, popup="Portland, OR") %>% 
+    addMarkers(lat=30.26715, lng=-97.74306, popup="Austin, TX") %>% 
+    addMarkers(lat=41.85003, lng=-87.65005, popup="Chicago, IL") %>% 
+    addMarkers(lat=39.73915, lng=-104.9847, popup="Denver, CO") %>% 
+    addMarkers(lat=33.76696, lng=-118.18923, popup="Long Beach, CA")
+my_map
+```
