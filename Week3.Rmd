@@ -1,0 +1,43 @@
+---
+title: "Overall Survival Differences by Sex in Advanced Lung Cancer"
+author: "Jesse Dixon"
+date: "10/16/2020"
+output:
+  ioslides_presentation: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(plotly)
+library(survival)
+library(GGally)
+data(cancer)
+```
+
+## Lung Cancer Data
+
+- Data taken from the survival package
+- Consists of patient data from NCCTG lung cancer trial
+- Reference:
+    - Loprinzi CL., Laurie JA., et al. Prospective evaluation of prognostic variables from patient-completed questionnaires. North Central Cancer Treatment Group. Journal of Clinical Oncology. 12(3):601-7, 1994.
+
+## Test for Differences by Sex
+
+```{r, echo = TRUE}
+##Fit the KM Curves
+cancer<-transform(cancer,sex=factor(sex, levels=1:2, labels=c("Male", "Female")))
+fit<-survfit(Surv(time,status)~sex, data=cancer)
+##Calculate Logrank P-value
+(pval<-survdiff(Surv(time,status)~sex, data=cancer))
+```
+
+## Overall Survival by Sex
+
+```{r, warning=FALSE}
+##Create Plot
+plot<-ggsurv(fit) + xlab("Time (Days)") + ylab("Overall Survival") + theme_bw() + geom_text(aes(label=sprintf("logrank p-value = %0.2g",pchisq(pval$chisq,df=1,lower.tail=FALSE))), x=800,y=.9)
+##Convert to Plotly
+ggplotly(plot)
+```
+
+
